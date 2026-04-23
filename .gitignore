@@ -1,0 +1,23 @@
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Java
+*.class
+*.jar
+*.war
+
+# Build
+bin/
+out/
+
+# Data files
+*.dat
+*.log
+
+# Local config
+*.local.properties
+*.iml
