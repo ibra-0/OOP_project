@@ -14,6 +14,7 @@ public class Database implements Serializable {
 
     public List<User> users = new ArrayList<>();
     public List<String> courses = new ArrayList<>();
+    public List<String> news = new ArrayList<>();
 
     private Database() {}
 
@@ -88,4 +89,17 @@ public class Database implements Serializable {
             return null;
         }
     }
+    public User authenticate(String login, String password) {
+    User user = findUserByLogin(login);
+    if (user != null && user.getPassword().equals(User.hashPassword(password))) {
+        return user;
+    }
+    return null;
+}
+
+public void addNews(String newsItem) {
+    news.add(newsItem);
+    save(); 
+}
+
 }

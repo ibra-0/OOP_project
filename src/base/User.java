@@ -37,6 +37,10 @@ public abstract class User implements Serializable {
         return role;
     }
 
+    public String getPassword() {
+        return passwordHash;
+    }
+
     public boolean checkPassword(String password) {
         return this.passwordHash.equals(hashPassword(password));
     }
