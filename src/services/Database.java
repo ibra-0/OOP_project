@@ -7,6 +7,11 @@ import base.User;
 import enums.Role;
 import services.Logger;
 
+/**
+ * Singleton class representing the central data repository.
+ * Handles Binary Serialization to database.dat and implements Observer broadcasting.
+ */
+
 public class Database implements Serializable {
     private static final long serialVersionUID = 1L;
     private static Database instance;
@@ -17,6 +22,7 @@ public class Database implements Serializable {
     public List<String> news = new ArrayList<>();
 
     private Database() {}
+    /** @return the unique instance of the Database (Singleton) */
 
     public static Database getInstance() {
         if (instance == null) {
@@ -27,7 +33,10 @@ public class Database implements Serializable {
         }
         return instance;
     }
-
+/**
+     * Broadcasts a news item to all registered users (Observer Pattern).
+     * @param text news content
+     */
     public void addUser(User user) {
         users.add(user);
         Logger.log("User added: " + user.getLogin() + " with role " + user.getRole());
@@ -66,7 +75,7 @@ public class Database implements Serializable {
         }
         return result;
     }
-
+/** Serializes the entire database state to a file. */
     public void save() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
             oos.writeObject(this);
@@ -97,9 +106,12 @@ public class Database implements Serializable {
     return null;
 }
 
-public void addNews(String newsItem) {
-    news.add(newsItem);
-    save(); 
+public void addNews(String text) {
+    news.add(text);
+    for (User user : users) {
+        user.update(text);
+    }
+    save();
 }
 
 }
