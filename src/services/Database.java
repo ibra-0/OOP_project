@@ -39,14 +39,14 @@ public class Database implements Serializable {
      */
     public void addUser(User user) {
         users.add(user);
-        Logger.log("User added: " + user.getLogin() + " with role " + user.getRole());
+        Logger.log("User added: " + user.getLogin() + " [id=" + user.getId() + "] with role " + user.getRole());
     }
 
     public boolean removeUser(String userId) {
         User user = findUserById(userId);
         if (user != null) {
             users.remove(user);
-            Logger.log("User removed: " + user.getLogin());
+            Logger.log("User removed: " + user.getLogin() + " [id=" + user.getId() + "]");
             return true;
         }
         return false;
@@ -113,5 +113,10 @@ public void addNews(String text) {
     }
     save();
 }
+
+    private Object readResolve() {
+        instance = this;
+        return this;
+    }
 
 }
