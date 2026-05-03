@@ -1,6 +1,8 @@
-package research;
+package comparators;
 
 import java.util.Comparator;
+
+import research.ResearchPaper;
 
 public final class PaperComparators {
 
