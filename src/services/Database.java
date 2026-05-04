@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import base.User;
-import enums.Role;
+import exceptions.enums.Role;
 import services.Logger;
 
 /**

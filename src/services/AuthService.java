@@ -1,7 +1,7 @@
 package services;
 
 import base.User;
-import enums.Role;
+import exceptions.enums.Role;
 
 public class AuthService {
     private static AuthService instance;

@@ -1,8 +1,8 @@
 package ui;
 
 import base.User;
+import exceptions.enums.Role;
 import services.Database;
-import enums.Role;
 import models.Message;
 import java.util.Scanner;
 

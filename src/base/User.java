@@ -1,8 +1,9 @@
 package base;
 
-import enums.Role;
 import java.io.Serializable;
 import java.util.UUID;
+
+import exceptions.enums.Role;
 import interfaces.Observer;
 
 /**

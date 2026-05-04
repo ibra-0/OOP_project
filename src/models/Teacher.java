@@ -1,7 +1,7 @@
 package models;
 
 import base.User;
-import enums.Role;
+import exceptions.enums.Role;
 
 public class Teacher extends User {
     public Teacher(String login, String password, String name) {

@@ -1,7 +1,7 @@
 package models;
 
 import base.User;
-import enums.Role;
+import exceptions.enums.Role;
 
 public class Admin extends User {
     public Admin(String login, String password, String name) {

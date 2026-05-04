@@ -1,4 +1,4 @@
-package enums;
+package exceptions.enums;
 
 public enum Role {
     STUDENT, 
