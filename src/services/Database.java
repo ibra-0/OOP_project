@@ -8,6 +8,7 @@ import java.util.Map;
 import base.User;
 import enums.Role;
 import models.Course;
+import models.CourseRegistrationRequest;
 import models.Student;
 import models.Teacher;
 import services.Logger;
@@ -27,6 +28,8 @@ public class Database implements Serializable {
     public List<String> courses = new ArrayList<>();
     public List<Course> courseCatalog = new ArrayList<>();
     public List<String> news = new ArrayList<>();
+    public List<CourseRegistrationRequest> registrationRequests = new ArrayList<>();
+    public Map<String, Integer> teacherRatings = new LinkedHashMap<>();
 
     private Database() {}
     /** @return the unique instance of the Database (Singleton) */
@@ -108,7 +111,7 @@ public class Database implements Serializable {
         User u = findUserByLogin(teacherLogin);
         if (!(u instanceof Teacher)) return false;
 
-        return course.addTeacher((Teacher) u);
+        return CourseService.getInstance().addTeacher(course, (Teacher) u);
     }
 
     public List<Course> getCoursesByTeacher(String teacherLogin) {
@@ -147,7 +150,7 @@ public class Database implements Serializable {
         if (!(u instanceof Student)) return false;
         Course c = findCourseById(courseId);
         if (c == null) return false;
-        return c.addStudent((Student) u);
+        return CourseService.getInstance().registerStudent(c, (Student) u);
     }
 /** Serializes the entire database state to a file. */
     public void save() {
@@ -200,6 +203,8 @@ public void addNews(String text) {
         if (courses == null) courses = new ArrayList<>();
         if (courseCatalog == null) courseCatalog = new ArrayList<>();
         if (news == null) news = new ArrayList<>();
+        if (registrationRequests == null) registrationRequests = new ArrayList<>();
+        if (teacherRatings == null) teacherRatings = new LinkedHashMap<>();
 
         // Migrate legacy string-only courses into Course objects.
         if (!courses.isEmpty()) {

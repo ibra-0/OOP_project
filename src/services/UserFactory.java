@@ -2,6 +2,7 @@ package services;
 
 import base.User;
 import models.Admin;
+import models.Manager;
 import models.Student;
 import models.Teacher;
 import enums.Role;
@@ -29,6 +30,8 @@ public class UserFactory {
                 return new Teacher(login, password, name);
             case ADMIN:
                 return new Admin(login, password, name);
+            case MANAGER:
+                return new Manager(login, password, name);
             default:
                 throw new IllegalArgumentException("Unsupported role: " + role);
         }

@@ -2,7 +2,6 @@ package models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,47 +46,23 @@ public class Course implements Serializable {
     }
 
     public boolean hasSpace() {
+        if (students == null) students = new ArrayList<>();
         return students.size() < maxStudents;
     }
 
-    public boolean addTeacher(Teacher teacher) {
-        if (teacher == null || teachers.contains(teacher)) return false;
-        teachers.add(teacher);
-        teacher.assignCourse(this);
-        return true;
-    }
-
-    public boolean removeTeacher(Teacher teacher) {
-        return teachers.remove(teacher);
-    }
-
-    public boolean addStudent(Student student) {
-        if (student == null || students.contains(student) || !hasSpace()) return false;
-        students.add(student);
-        student.enrollCourse(this);
-        return true;
-    }
-
-    public boolean removeStudent(Student student) {
-        return students.remove(student);
-    }
-
     public List<Teacher> getTeachers() {
-        return Collections.unmodifiableList(teachers);
+        if (teachers == null) teachers = new ArrayList<>();
+        return teachers;
     }
 
     public List<Student> getStudents() {
-        return Collections.unmodifiableList(students);
+        if (students == null) students = new ArrayList<>();
+        return students;
     }
 
     public List<Lesson> getLessons() {
-        return Collections.unmodifiableList(lessons);
-    }
-
-    public void addLesson(Lesson lesson) {
-        if (lesson != null) {
-            lessons.add(lesson);
-        }
+        if (lessons == null) lessons = new ArrayList<>();
+        return lessons;
     }
 
     @Override
