@@ -25,11 +25,11 @@ public class ResearchPaper implements Comparable<ResearchPaper>, Serializable {
                          LocalDate publicationDate,
                          String doi,
                          int citations) {
-        this.title = title;
+        this.title = Objects.requireNonNull(title, "title");
         this.authors = authors != null ? new ArrayList<>(authors) : new ArrayList<>();
         this.journal = journal;
         this.pages = pages;
-        this.publicationDate = publicationDate;
+        this.publicationDate = Objects.requireNonNull(publicationDate, "publicationDate");
         this.doi = doi;
         this.citations = citations;
     }

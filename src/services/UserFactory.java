@@ -1,7 +1,11 @@
 package services;
 
 import base.User;
+<<<<<<< HEAD
 import exceptions.enums.Role;
+=======
+import models.Admin;
+>>>>>>> eb511213a56517825a4f95e8fbc8e0c1452b9f68
 import models.Student;
 import models.Teacher;
 /**
@@ -26,8 +30,10 @@ public class UserFactory {
                 return new Student(login, password, name);
             case TEACHER:
                 return new Teacher(login, password, name);
-             default:
-                throw new IllegalArgumentException("Unknown role: " + role);
+            case ADMIN:
+                return new Admin(login, password, name);
+            default:
+                throw new IllegalArgumentException("Unsupported role: " + role);
         }
     }
 }

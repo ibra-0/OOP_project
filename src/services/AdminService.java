@@ -5,7 +5,7 @@ import exceptions.enums.Role;
 import models.Admin;
 import models.Teacher;
 import models.Student;
-
+import enums.Role;
 import java.util.List;
 
 public class AdminService {
@@ -59,7 +59,7 @@ public class AdminService {
     }
 
     public List<User> getAllUsers() {
-        return db.users;
+        return new ArrayList<>(db.users);
     }
 
     public List<User> getUsersByRole(Role role) {
