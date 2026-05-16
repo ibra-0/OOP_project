@@ -6,8 +6,6 @@ import exceptions.enums.Role;
 =======
 import enums.Role;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 >>>>>>> eb511213a56517825a4f95e8fbc8e0c1452b9f68
 
@@ -24,26 +22,12 @@ public class Student extends User {
 
     public List<String> getEnrolledCourses() {
         if (enrolledCourses == null) enrolledCourses = new ArrayList<>();
-        return Collections.unmodifiableList(enrolledCourses);
-    }
-
-    public boolean enroll(String course) {
-        if (enrolledCourses == null) enrolledCourses = new ArrayList<>();
-        if (course == null || course.isBlank() || enrolledCourses.contains(course)) return false;
-        enrolledCourses.add(course);
-        return true;
-    }
-
-    public boolean enrollCourse(Course course) {
-        if (enrolledCourseObjects == null) enrolledCourseObjects = new ArrayList<>();
-        if (course == null || enrolledCourseObjects.contains(course)) return false;
-        enrolledCourseObjects.add(course);
-        return enroll(course.getCourseID());
+        return enrolledCourses;
     }
 
     public List<Course> getEnrolledCourseObjects() {
         if (enrolledCourseObjects == null) enrolledCourseObjects = new ArrayList<>();
-        return Collections.unmodifiableList(enrolledCourseObjects);
+        return enrolledCourseObjects;
     }
 
     public void addMark(Mark mark) {
@@ -55,7 +39,7 @@ public class Student extends User {
 
     public List<Mark> getMarks() {
         if (marks == null) marks = new ArrayList<>();
-        return Collections.unmodifiableList(marks);
+        return marks;
     }
 
     public Mark getMarkForCourse(Course course) {

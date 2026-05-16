@@ -10,7 +10,6 @@ import research.ResearchProject;
 import research.Researcher;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,36 +31,17 @@ public class Teacher extends User implements Researcher {
 
     public Map<String, String> getMarks() {
         if (marks == null) marks = new LinkedHashMap<>();
-        return Collections.unmodifiableMap(marks);
-    }
-
-    public void putMark(String studentLogin, String mark) {
-        if (marks == null) marks = new LinkedHashMap<>();
-        marks.put(studentLogin, mark);
+        return marks;
     }
 
     public List<String> getAssignedCourses() {
         if (assignedCourses == null) assignedCourses = new ArrayList<>();
-        return Collections.unmodifiableList(assignedCourses);
-    }
-
-    public boolean assignCourse(String course) {
-        if (assignedCourses == null) assignedCourses = new ArrayList<>();
-        if (course == null || course.isBlank() || assignedCourses.contains(course)) return false;
-        assignedCourses.add(course);
-        return true;
-    }
-
-    public boolean assignCourse(Course course) {
-        if (assignedCourseObjects == null) assignedCourseObjects = new ArrayList<>();
-        if (course == null || assignedCourseObjects.contains(course)) return false;
-        assignedCourseObjects.add(course);
-        return assignCourse(course.getCourseID());
+        return assignedCourses;
     }
 
     public List<Course> getAssignedCourseObjects() {
         if (assignedCourseObjects == null) assignedCourseObjects = new ArrayList<>();
-        return Collections.unmodifiableList(assignedCourseObjects);
+        return assignedCourseObjects;
     }
 
     public void setHIndex(int hIndex) { this.hIndex = hIndex; }

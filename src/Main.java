@@ -3,6 +3,7 @@ import services.Database;
 import models.Admin;
 import models.Student;
 import models.Teacher;
+import models.Manager;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,6 +19,7 @@ public class Main {
         boolean changed = false;
 
         changed |= seedIfMissing(db, new Admin("admin", "123456", "admin"));
+        changed |= seedIfMissing(db, new Manager("manager", "123456", "manager"));
         changed |= seedIfMissing(db, new Teacher("employee", "123456", "test"));
         changed |= seedIfMissing(db, new Teacher("kaster", "123456", "Kaster Nurmakhan"));
         changed |= seedIfMissing(db, new Student("ibrahim", "123456", "Razyyev Ibrahim"));
