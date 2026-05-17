@@ -1,5 +1,6 @@
 package services;
 
+/** Publishes and removes news items via the central {@link Database}. */
 public class NewsService {
     private static NewsService instance;
     private final Database db = Database.getInstance();

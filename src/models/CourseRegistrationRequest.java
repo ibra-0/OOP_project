@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Student request to enroll in a course; may be pending, approved, or rejected.
+ */
 public class CourseRegistrationRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -14,6 +17,7 @@ public class CourseRegistrationRequest implements Serializable {
     private final LocalDateTime createdAt;
     private Status status;
 
+    /** Lifecycle state of a registration request. */
     public enum Status {
         PENDING,
         APPROVED,

@@ -48,10 +48,7 @@ public class Database implements Serializable {
         instance.ensureInitialized();
         return instance;
     }
-/**
-     * Broadcasts a news item to all registered users (Observer Pattern).
-     * @param text news content
-     */
+    /** Registers a new user in the in-memory store. */
     public void addUser(User user) {
         ensureInitialized();
         users.add(user);
@@ -156,7 +153,7 @@ public class Database implements Serializable {
         if (c == null) return false;
         return CourseService.getInstance().registerStudent(c, (Student) u);
     }
-/** Serializes the entire database state to a file. */
+    /** Serializes the entire database state to {@value #DATA_FILE}. */
     public void save() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(DATA_FILE))) {
             oos.writeObject(this);
@@ -187,7 +184,11 @@ public class Database implements Serializable {
     return null;
 }
 
-public void addNews(String text) {
+    /**
+     * Broadcasts a news item to all registered users (Observer pattern).
+     * @param text news content
+     */
+    public void addNews(String text) {
     ensureInitialized();
     news.add(text);
     for (User user : users) {

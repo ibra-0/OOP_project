@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 >>>>>>> eb511213a56517825a4f95e8fbc8e0c1452b9f68
 
+/**
+ * Student user with course enrollment, marks, and transcript support.
+ */
 public class Student extends User {
     private static final long serialVersionUID = 2L;
 

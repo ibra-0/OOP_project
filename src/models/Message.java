@@ -2,6 +2,7 @@ package models;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/** Inbox message with sender, body, and timestamp. */
 public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
 

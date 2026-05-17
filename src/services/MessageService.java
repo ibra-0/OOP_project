@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/** Direct messages and complaints routed to managers or admins. */
 public class MessageService {
     private static MessageService instance;
     private final Database db = Database.getInstance();

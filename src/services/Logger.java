@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/** Simple file-backed application logger. */
 public class Logger implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final String LOG_FILE = "app.log";

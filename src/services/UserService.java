@@ -3,6 +3,7 @@ package services;
 import base.User;
 import enums.Role;
 
+/** CRUD operations for {@link base.User} instances backed by {@link Database}. */
 public class UserService {
     private static UserService instance;
     private final Database db = Database.getInstance();

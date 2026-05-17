@@ -9,7 +9,7 @@ import interfaces.Observer;
 /**
  * Abstract base class representing a generic user in the University Management System.
  * Implements Serializable for data persistence and Observer for the notification system.
- * * @authors Batyrbekov Zhanibek, Razyyev Ibrakhim, Yeskenov Aldiyar, Nurdybmek Elizat
+ * @author Batyrbekov Zhanibek, Razyyev Ibrakhim, Yeskenov Aldiyar, Nurdybmek Elizat
  * @version 2.1
  */
 public abstract class User implements Serializable, Observer {
@@ -24,7 +24,7 @@ public abstract class User implements Serializable, Observer {
 
     /**
      * Initializes a new user with a unique UUID.
-     * * @param login unique username
+     * @param login unique username
      * @param passwordHash pre-hashed password
      * @param name display name of the user
      * @param role user's access level/role
@@ -75,6 +75,9 @@ public abstract class User implements Serializable, Observer {
         System.out.println("🔔 [Notification for " + name + "]: " + news);
     }
 
+    /** Appends an inbox message for this user. */
     public void receiveMessage(models.Message msg) { this.messages.add(msg); }
+
+    /** @return a mutable list of messages received by this user */
     public java.util.List<models.Message> getMessages() { return messages; }
 }

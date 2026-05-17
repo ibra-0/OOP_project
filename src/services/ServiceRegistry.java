@@ -1,5 +1,8 @@
 package services;
 
+/**
+ * Convenience accessors for all singleton application services.
+ */
 public final class ServiceRegistry {
     private ServiceRegistry() {}
 

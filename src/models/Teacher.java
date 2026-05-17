@@ -14,6 +14,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Teacher user assigned to courses; also acts as a {@link research.Researcher}.
+ */
 public class Teacher extends User implements Researcher {
     private static final long serialVersionUID = 3L;
 

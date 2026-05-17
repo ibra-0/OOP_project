@@ -4,6 +4,7 @@ import base.User;
 import enums.Role;
 import services.NewsService;
 
+/** Manager who can publish and remove campus news. */
 public class Manager extends User {
     private static final long serialVersionUID = 1L;
 

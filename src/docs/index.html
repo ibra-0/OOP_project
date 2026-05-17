@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UMS — Documentation</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+      line-height: 1.5;
+      max-width: 52rem;
+      margin: 2rem auto;
+      padding: 0 1.25rem;
+    }
+    h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+    .subtitle { color: #666; margin-top: 0; }
+    section { margin-top: 2rem; }
+    ul { padding-left: 1.25rem; }
+    a { color: #0b5fff; }
+    code { font-size: 0.9em; }
+    .hint {
+      margin-top: 2rem;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      background: #f4f4f5;
+      font-size: 0.95rem;
+    }
+    @media (prefers-color-scheme: dark) {
+      .subtitle { color: #aaa; }
+      .hint { background: #222; }
+    }
+  </style>
+</head>
+<body>
+  <h1>University Management System</h1>
+  <p class="subtitle">HTML API documentation</p>
+
+  <section>
+    <h2>API reference</h2>
+    <ul>
+      <li><a href="api/index.html">All packages</a></li>
+      <li><a href="api/base/package-summary.html">Base classes</a> — <code>base.User</code></li>
+      <li><a href="api/models/package-summary.html">Model classes</a> — courses, users, marks, …</li>
+      <li><a href="api/services/package-summary.html">Service classes</a> — auth, database, courses, …</li>
+    </ul>
+  </section>
+
+  <p class="hint">
+    Regenerate after code changes: <code>./scripts/generate-docs.sh</code>
+  </p>
+</body>
+</html>

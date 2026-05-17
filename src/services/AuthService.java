@@ -3,6 +3,9 @@ package services;
 import base.User;
 import exceptions.enums.Role;
 
+/**
+ * Singleton authentication service: login, logout, and role checks.
+ */
 public class AuthService {
     private static AuthService instance;
     private User currentUser;

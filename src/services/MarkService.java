@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/** Grading, transcripts, academic reports, and teacher ratings. */
 public class MarkService {
     private static MarkService instance;
     private final Database db = Database.getInstance();

@@ -2,6 +2,9 @@ package models;
 
 import java.io.Serializable;
 
+/**
+ * Grade record for a student in a course (two attempts plus final exam).
+ */
 public class Mark implements Serializable {
     private static final long serialVersionUID = 1L;
 

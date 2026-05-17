@@ -3,6 +3,9 @@ package models;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Academic summary for a student: GPA, earned credits, and fail count.
+ */
 public class Transcript implements Serializable {
     private static final long serialVersionUID = 1L;
 

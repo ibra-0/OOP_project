@@ -9,6 +9,7 @@ import research.Researcher;
 import java.util.Comparator;
 import java.util.List;
 
+/** Facade over research papers, projects, and supervisor assignment. */
 public class ResearchService {
     private static ResearchService instance;
 

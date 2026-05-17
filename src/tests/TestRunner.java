@@ -12,11 +12,12 @@ import research.ResearchManager;
 import research.ResearchPaper;
 import research.ResearchProject;
 import research.Researcher;
-import services.AdminService;
 import services.AuthService;
+import services.CourseService;
 import services.Database;
 import services.Logger;
 import services.UserFactory;
+import services.UserService;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -47,7 +48,7 @@ public class TestRunner {
         testUserFactoryStudent();
         testUserFactoryTeacher();
         testUserFactoryAdmin();
-        testUserFactoryManagerStillUnsupported();
+        testUserFactoryManager();
 
         testDatabaseSingleton();
         testDatabaseAddAndFind();
@@ -61,16 +62,11 @@ public class TestRunner {
         testAuthServiceWrongPass();
         testAuthServiceRoleChecks();
 
-        testAdminServiceAddDuplicate();
-        testAdminServiceAddManagerRejected();
-        testAdminServiceRemoveLastAdminRefused();
-        testAdminServiceRemoveUnknown();
-
         testLoggerByUser();
         testDatabaseSingletonRoundTrip();
-        testAdminServiceGetAllUsersDefensiveCopy();
-        testStudentEnroll();
-        testTeacherPutMark();
+        testUserServiceAddDuplicateRejected();
+        testCourseServiceRegisterStudentLinksBothSides();
+        testCourseServiceAssignTeacherLinksBothSides();
 
         testResearchPaperCompareToRecentFirst();
         testResearchPaperEqualsByDoi();
@@ -138,14 +134,9 @@ public class TestRunner {
         check("UserFactory: ADMIN -> Admin", u instanceof Admin && u.getRole() == Role.ADMIN);
     }
 
-    private static void testUserFactoryManagerStillUnsupported() {
-        // No Manager class exists yet; factory must reject cleanly.
-        try {
-            UserFactory.createUser(Role.MANAGER, "f4", "p", "F4");
-            check("UserFactory: MANAGER rejected with IllegalArgumentException", false);
-        } catch (IllegalArgumentException e) {
-            check("UserFactory: MANAGER rejected with IllegalArgumentException", true);
-        }
+    private static void testUserFactoryManager() {
+        User u = UserFactory.createUser(Role.MANAGER, "f4", "p", "F4");
+        check("UserFactory: MANAGER -> Manager", u instanceof models.Manager && u.getRole() == Role.MANAGER);
     }
 
     private static void testDatabaseSingleton() {
@@ -235,38 +226,14 @@ public class TestRunner {
         auth.logout();
     }
 
-    private static void testAdminServiceAddDuplicate() {
-        AdminService svc = new AdminService();
-        boolean firstAdd = svc.addUser("dup1", "pw", "Dup", Role.STUDENT);
-        boolean secondAdd = svc.addUser("dup1", "pw", "Dup", Role.STUDENT);
-        check("AdminService.addUser: first add succeeds", firstAdd);
-        check("AdminService.addUser: duplicate login rejected", !secondAdd);
-    }
-
-    private static void testAdminServiceAddManagerRejected() {
-        AdminService svc = new AdminService();
-        boolean ok = svc.addUser("mgr1", "pw", "Mgr", Role.MANAGER);
-        check("AdminService.addUser: MANAGER role rejected (no concrete class)", !ok);
-    }
-
-    private static void testAdminServiceRemoveLastAdminRefused() {
+    private static void testUserServiceAddDuplicateRejected() {
         Database db = Database.getInstance();
-        // Ensure exactly one admin remains: remove all admins, then add one.
-        List<User> admins = new ArrayList<>(db.getUsersByRole(Role.ADMIN));
-        for (User a : admins) db.users.remove(a);
-        Admin lone = new Admin("loneadmin", "pw", "Lone");
-        db.addUser(lone);
-        AdminService svc = new AdminService();
-        boolean removed = svc.removeUser(lone.getId());
-        check("AdminService.removeUser: refuses to remove the last admin", !removed);
-        check("AdminService.removeUser: lone admin still in DB",
-                db.findUserById(lone.getId()) == lone);
-    }
-
-    private static void testAdminServiceRemoveUnknown() {
-        AdminService svc = new AdminService();
-        check("AdminService.removeUser: unknown id returns false",
-                !svc.removeUser("does-not-exist"));
+        UserService svc = UserService.getInstance();
+        int before = db.users.size();
+        svc.addUser(new Student("dup1", "pw", "Dup"));
+        svc.addUser(new Student("dup1", "pw", "Dup"));
+        int after = db.users.size();
+        check("UserService.addUser: duplicate login ignored", after == before + 1);
     }
 
     private static void testLoggerByUser() {
@@ -297,45 +264,32 @@ public class TestRunner {
         }
     }
 
-    private static void testAdminServiceGetAllUsersDefensiveCopy() {
+    private static void testCourseServiceRegisterStudentLinksBothSides() {
         Database db = Database.getInstance();
-        AdminService svc = new AdminService();
-        int before = db.users.size();
-        List<User> snapshot = svc.getAllUsers();
-        snapshot.clear();
-        check("AdminService.getAllUsers: mutation on returned list does not affect DB",
-                db.users.size() == before);
-    }
-
-    private static void testStudentEnroll() {
+        CourseService svc = CourseService.getInstance();
         Student s = new Student("enr", "pw", "Enr");
-        check("Student.enroll: empty initial course list", s.getEnrolledCourses().isEmpty());
-        check("Student.enroll: adds new course", s.enroll("Algebra"));
-        check("Student.enroll: rejects duplicate", !s.enroll("Algebra"));
-        check("Student.enroll: rejects blank", !s.enroll(""));
-        check("Student.enroll: list now contains the course",
+        db.addUser(s);
+        db.createCourse("Algebra", 5, "GEN", 1, 30);
+        boolean ok = svc.registerStudent(db.findCourseById("Algebra"), s);
+        check("CourseService.registerStudent: returns true", ok);
+        check("CourseService.registerStudent: course contains student",
+                db.findCourseById("Algebra").getStudents().contains(s));
+        check("CourseService.registerStudent: student contains course id",
                 s.getEnrolledCourses().contains("Algebra"));
-        try {
-            s.getEnrolledCourses().add("Physics");
-            check("Student.getEnrolledCourses: returns unmodifiable view", false);
-        } catch (UnsupportedOperationException e) {
-            check("Student.getEnrolledCourses: returns unmodifiable view", true);
-        }
     }
 
-    private static void testTeacherPutMark() {
+    private static void testCourseServiceAssignTeacherLinksBothSides() {
+        Database db = Database.getInstance();
+        CourseService svc = CourseService.getInstance();
         Teacher t = new Teacher("tt", "pw", "TT");
-        t.putMark("alice", "A");
-        t.putMark("bob", "B+");
-        check("Teacher.putMark: stores marks", t.getMarks().size() == 2
-                && "A".equals(t.getMarks().get("alice"))
-                && "B+".equals(t.getMarks().get("bob")));
-        try {
-            t.getMarks().put("eve", "F");
-            check("Teacher.getMarks: returns unmodifiable view", false);
-        } catch (UnsupportedOperationException e) {
-            check("Teacher.getMarks: returns unmodifiable view", true);
-        }
+        db.addUser(t);
+        db.createCourse("Physics", 5, "GEN", 1, 30);
+        boolean ok = svc.addTeacher(db.findCourseById("Physics"), t);
+        check("CourseService.addTeacher: returns true", ok);
+        check("CourseService.addTeacher: course contains teacher",
+                db.findCourseById("Physics").getTeachers().contains(t));
+        check("CourseService.addTeacher: teacher contains course id",
+                t.getAssignedCourses().contains("Physics"));
     }
 
     private static void testResearchPaperCompareToRecentFirst() {

@@ -5,6 +5,7 @@ import enums.LessonType;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/** Scheduled lesson belonging to a course and taught by a teacher. */
 public class Lesson implements Serializable {
     private static final long serialVersionUID = 1L;
 

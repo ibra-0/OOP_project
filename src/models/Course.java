@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Serializable course entity with teachers, enrolled students, and scheduled lessons.
+ */
 public class Course implements Serializable {
     private static final long serialVersionUID = 1L;
 

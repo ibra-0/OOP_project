@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Course enrollment, teacher assignment, and registration request workflow.
+ */
 public class CourseService {
     private static CourseService instance;
     private final Database db = Database.getInstance();

@@ -16,7 +16,7 @@ public class UserFactory {
 
     /**
      * Static factory method to create concrete User instances.
-     * * @param role target role to instantiate
+     * @param role target role to instantiate
      * @param login user login
      * @param password raw password (will be hashed internally)
      * @param name user full name
